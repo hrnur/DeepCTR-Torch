@@ -22,7 +22,7 @@ from tqdm import tqdm
 try:
     from tensorflow.python.keras.callbacks import CallbackList
 except ImportError:
-    from tensorflow.python.keras._impl.keras.callbacks import CallbackList
+    from tensorflow.python.keras.callbacks import CallbackList
 
 from ..inputs import build_input_features, SparseFeat, DenseFeat, VarLenSparseFeat, get_varlen_pooling_list, \
     create_embedding_matrix, varlen_embedding_lookup
@@ -476,6 +476,8 @@ class BaseModel(nn.Module):
             loss_func = F.mse_loss
         elif loss == "mae":
             loss_func = F.l1_loss
+        elif loss == "crossentropy":
+            loss_func = F.cross_entropy
         else:
             raise NotImplementedError
         return loss_func
